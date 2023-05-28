@@ -7,11 +7,14 @@
         <collection id="loansDc"
                     class="com.company.homeworkloans.entity.Loan">
             <fetchPlan extends="_base">
-                <property name="client" fetchPlan="_instance_name"/>
+                <property name="client" fetchPlan="_instance_name">
+                    <property name="phoneNumber"/>
+                    <property name="salary"/>
+                </property>
             </fetchPlan>
             <loader id="loansDl">
                 <query>
-                    <![CDATA[select e from Loan e]]>
+                    <![CDATA[select e from Loan e where e.status =:statusId]]>
                 </query>
             </loader>
         </collection>
@@ -37,22 +40,30 @@
                 dataLoader="loansDl">
             <properties include=".*"/>
         </filter>
-        <table id="loansTable"
-               width="100%"
-               dataContainer="loansDc">
+        <groupTable id="loansTable"
+                    width="100%"
+                    dataContainer="loansDc">
             <actions>
             </actions>
             <columns>
+                <group>
+                    <column id="requestDate"/>
+                </group>
                 <column id="client"/>
                 <column id="amount"/>
-                <column id="requestDate"/>
-                <column id="status"/>
+                <column id="client.phoneNumber"
+                        caption="Phone number"/>
+                <column id="client.salary"
+                        caption="Salary"/>
+                <!--column id="clientAge"
+                        caption="Age"/>
+                <column id="status"/-->
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
             </buttonsPanel>
-        </table>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
