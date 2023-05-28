@@ -32,6 +32,8 @@
         <action id="lookupCancelAction"
                 caption="msg:///actions.Cancel"
                 icon="LOOKUP_CANCEL"/>
+        <action id="approveAction"/>
+        <action id="rejectAction"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -62,6 +64,8 @@
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="approveBtn" caption="Approve" icon="OK" action="approveAction"/>
+                <button id="rejectBtn" caption="Reject" icon="NO" action="rejectAction"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
