@@ -10,6 +10,7 @@
                 <property name="client" fetchPlan="_instance_name">
                     <property name="phoneNumber"/>
                     <property name="salary"/>
+                    <property name="birthDate"/>
                 </property>
             </fetchPlan>
             <loader id="loansDl">
@@ -57,9 +58,7 @@
                         caption="Phone number"/>
                 <column id="client.salary"
                         caption="Salary"/>
-                <!--column id="clientAge"
-                        caption="Age"/>
-                <column id="status"/-->
+                <column id="clientAge" caption="msg://clientAge.caption"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

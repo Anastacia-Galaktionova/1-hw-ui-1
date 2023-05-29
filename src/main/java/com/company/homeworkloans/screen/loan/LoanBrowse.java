@@ -3,12 +3,18 @@ package com.company.homeworkloans.screen.loan;
 import com.company.homeworkloans.entity.LoanStatus;
 import io.jmix.core.DataManager;
 import io.jmix.ui.Notifications;
+import io.jmix.ui.UiComponents;
 import io.jmix.ui.action.Action;
+import io.jmix.ui.component.Component;
 import io.jmix.ui.component.GroupTable;
+import io.jmix.ui.component.Label;
 import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import com.company.homeworkloans.entity.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import java.util.Set;
 
@@ -25,12 +31,9 @@ public class LoanBrowse extends StandardLookup<Loan> {
     private DataManager dataManager;
     @Autowired
     private Notifications notifications;
+    @Autowired
+    private UiComponents uiComponents;
 
-
-   /* @Subscribe
-    public void onInit(InitEvent event) {
-        loansDl.setParameter("statusId", "R");
-    }*/
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -60,15 +63,17 @@ public class LoanBrowse extends StandardLookup<Loan> {
         notifications.create().withCaption("Rejected").show();
     }
 
+    @Install(to = "loansTable.clientAge", subject = "columnGenerator")
+    private Component loansTableClientAgeColumnGenerator(Loan loan) {
+        Label ageLabel = uiComponents.create(Label.class);
 
+        LocalDate date = loan.getClient().getBirthDate();
 
+        long age = ChronoUnit.YEARS.between(date, LocalDate.now());
 
-    /*@Subscribe
-    public void onInit(InitEvent event) {
-        loansTable.addGeneratedColumn("Age", entity -> {
-
-        });
-    }*/
+        ageLabel.setValue(age);
+        return ageLabel;
+    }
 
 
 
