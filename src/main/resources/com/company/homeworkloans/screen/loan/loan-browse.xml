@@ -7,11 +7,15 @@
         <collection id="loansDc"
                     class="com.company.homeworkloans.entity.Loan">
             <fetchPlan extends="_base">
-                <property name="client" fetchPlan="_instance_name"/>
+                <property name="client" fetchPlan="_instance_name">
+                    <property name="phoneNumber"/>
+                    <property name="salary"/>
+                    <property name="birthDate"/>
+                </property>
             </fetchPlan>
             <loader id="loansDl">
                 <query>
-                    <![CDATA[select e from Loan e]]>
+                    <![CDATA[select e from Loan e where e.status =:statusId]]>
                 </query>
             </loader>
         </collection>
@@ -29,6 +33,8 @@
         <action id="lookupCancelAction"
                 caption="msg:///actions.Cancel"
                 icon="LOOKUP_CANCEL"/>
+        <action id="approveAction"/>
+        <action id="rejectAction"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -37,22 +43,30 @@
                 dataLoader="loansDl">
             <properties include=".*"/>
         </filter>
-        <table id="loansTable"
-               width="100%"
-               dataContainer="loansDc">
+        <groupTable id="loansTable"
+                    width="100%"
+                    dataContainer="loansDc">
             <actions>
             </actions>
             <columns>
+                <group>
+                    <column id="requestDate"/>
+                </group>
                 <column id="client"/>
                 <column id="amount"/>
-                <column id="requestDate"/>
-                <column id="status"/>
+                <column id="client.phoneNumber"
+                        caption="Phone number"/>
+                <column id="client.salary"
+                        caption="Salary"/>
+                <column id="clientAge" caption="msg://clientAge.caption"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="approveBtn" caption="Approve" icon="OK" action="approveAction"/>
+                <button id="rejectBtn" caption="Reject" icon="NO" action="rejectAction"/>
             </buttonsPanel>
-        </table>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

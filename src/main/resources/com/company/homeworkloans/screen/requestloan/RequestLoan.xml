@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://requestloan.caption">
+    <data>
+        <collection id="clientsDc" class="com.company.homeworkloans.entity.Client">
+            <fetchPlan extends="_base"/>
+            <loader id="clientsDl">
+                <query>
+                    <![CDATA[select e from Client e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="clientDc" class="com.company.homeworkloans.entity.Client">
+            <fetchPlan extends="_base"/>
+            <loader id="clientDl"/>
+        </instance>
+        <collection id="loansDc" class="com.company.homeworkloans.entity.Loan">
+            <fetchPlan extends="_base"/>
+            <loader id="loansDl">
+                <query>
+                    <![CDATA[select e from Loan e where e.client.id = :clientId]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+    </actions>
+    <dialogMode height="300"
+                width="350"/>
+    <layout spacing="true">
+        <entityComboBox id="ClientCb"
+                        property="lastName"
+                        optionsContainer="clientsDc"
+                        caption="Client" required="true">
+        </entityComboBox>
+        <textField caption="Amount"
+                   id="AmountTf"
+                   required="true"
+                   datatype="BigDecimal"
+        >
+        </textField>
+        <hbox spacing="true">
+            <button id="commitAndCloseBtn"
+                    caption="Request"
+                    action="windowCommitAndClose"
+                    icon="CHECK"/>
+            <button caption="Cancel"
+                    id="CancelBtn"
+                    icon="CANCEL"/>
+        </hbox>
+    </layout>
+</window>
