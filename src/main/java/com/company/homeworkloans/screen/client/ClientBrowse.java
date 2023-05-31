@@ -19,9 +19,9 @@ public class ClientBrowse extends StandardLookup<Client> {
     @Subscribe("requestLoanAction")
     public void onRequestLoanAction(io.jmix.ui.action.Action.ActionPerformedEvent event) {
         Client selected = clientsTable.getSingleSelected();
-        if (selected == null) {
+        /*if (selected == null) {
             return;
-        }
+        }*/
 
         screenBuilders.screen(this)
                 .withScreenClass(Requestloan.class)

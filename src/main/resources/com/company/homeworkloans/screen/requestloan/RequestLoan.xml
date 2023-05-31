@@ -33,8 +33,8 @@
                 primary="true"
                 shortcut="${COMMIT_SHORTCUT}"/>
     </actions>
-    <dialogMode height="300"
-                width="350"/>
+    <dialogMode height="AUTO"
+                width="AUTO"/>
     <layout spacing="true">
         <entityComboBox id="ClientCb"
                         property="lastName"
@@ -44,7 +44,7 @@
         <textField caption="Amount"
                    id="AmountTf"
                    required="true"
-                   datatype="BigDecimal"
+                   datatype="decimal"
         >
         </textField>
         <hbox spacing="true">
