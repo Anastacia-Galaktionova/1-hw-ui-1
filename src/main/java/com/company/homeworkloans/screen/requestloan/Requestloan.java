@@ -44,7 +44,7 @@ public class Requestloan extends Screen {
         else {
             Loan loan = dataManager.create(Loan.class);
             loan.setClient(ClientCb.getValue());
-            loan.setAmount(parseAmountValue(AmountTf.getValue().toString()));
+            loan.setAmount((BigDecimal) AmountTf.getValue());
             loan.setRequestDate(LocalDate.now());
             loan.setStatus(LoanStatus.REQUESTED);
             dataManager.save(loan);
@@ -56,19 +56,6 @@ public class Requestloan extends Screen {
     @Subscribe("CancelBtn")
     public void onCancelBtnClick(Button.ClickEvent event) {
         close(StandardOutcome.CLOSE);
-    }
-
-
-    public BigDecimal parseAmountValue(String stringValue) {
-        MetaClass metaClass = metadata.getClass(Loan.class);
-        Datatype<BigDecimal> amountDatatype = metaClass.getProperty("amount")
-                .getRange().asDatatype();
-        assert amountDatatype instanceof BigDecimalDatatype;
-        try {
-            return amountDatatype.parse(stringValue);
-        } catch (ParseException e) {
-            throw new RuntimeException("Cannot parse amount", e);
-        }
     }
 
 
